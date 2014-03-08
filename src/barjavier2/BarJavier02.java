@@ -7,14 +7,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * start: sab 8 de mar 16:40 finish: sab 8 de mar 19:00
+ * start: sab 8 de mar 16:40 finish: ?
  *
  * @author Chemaclass
  */
 public class BarJavier02 {
 
+    /**
+     * Buffer de entrada
+     */
     public static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
+    /**
+     * Activar/Desactivar el log de depuración
+     */
     public static final boolean isLog = false;
+
+    /**
+     * Lista de días sobre los que iremos guardando los beneficios
+     */
     private final List<Dia> dias;
 
     public BarJavier02() {
@@ -74,6 +84,12 @@ public class BarJavier02 {
         log("END");
     }
 
+    /**
+     * Obtener todos los resultados de los días
+     *
+     * @return
+     * @throws Exception
+     */
     private Resultado[] getResultados() throws Exception {
         Resultado[] resultados = new Resultado[dias.size()];
         for (int i = 0; i < dias.size(); i++) {
@@ -88,6 +104,12 @@ public class BarJavier02 {
         return resultados;
     }
 
+    /**
+     * Pintar todos los resultados
+     *
+     * @param resultados Resultado[]
+     * @throws Exception
+     */
     private void printResultados(Resultado[] resultados) throws Exception {
         for (Resultado r : resultados) {
             String s = r.max + "#" + r.min + "#" + r.isComidas;
@@ -98,7 +120,7 @@ public class BarJavier02 {
     /**
      * Out
      *
-     * @param s String
+     * @param s Object
      */
     private void log(Object s) {
         if (isLog) {
