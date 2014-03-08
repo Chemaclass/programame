@@ -39,7 +39,7 @@ public class BarJavier02 {
         log("BEGIN");
 
         Dia dia = new Dia();
-        String input;
+        String input = "";
         boolean isContinuamos = true;
         do {
             try {
@@ -64,7 +64,10 @@ public class BarJavier02 {
             } catch (CodigoNotFoundException ex) {
                 log(ex.getMessage());
                 log("EXIT");
-                isContinuamos = false;
+                //Sólo si dimos un intro vacío le diremos que salga
+                if (input.length() <= 0) {
+                    isContinuamos = false;
+                }
             } catch (IOException | NumberFormatException ex) {
             }
 
