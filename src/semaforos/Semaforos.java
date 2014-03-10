@@ -3,9 +3,9 @@ package semaforos;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +20,7 @@ public class Semaforos {
 
     //Bandera para controlar debug
     private static final boolean debug = true;
+    private static final String SALIDA = "0 0";
 
     public static void main(String[] args) {
         new Semaforos().doMain(args);
@@ -30,16 +31,27 @@ public class Semaforos {
         return input.split(" ");
     }
 
+    /**
+     * Comprueba que que se haya introducido "0 0" para salir de la app
+     *
+     * @param inputs String[]
+     * @return boolean
+     */
+    private boolean fin(String[] inputs) {
+        return (inputs.length == 2 && inputs[0].equals("0") && inputs[1].equals("0"));
+    }
+
     public void doMain(String... args) {
         Calle calle;
-        String input = "";
+        String inputs[] = {}, input = "";
 
-        while (!input.equals("0 0")) {
+        while (!fin(inputs)) {
             try {
                 log("Introduce 2 números(El número de semáforos y la velocidad máxima):");
-
-                //input = BR.readLine();
-                String[] inputs = leer(input);
+                inputs = leer(input);
+                if (fin(inputs)) {
+                    break;
+                }
                 // Obtenemos los valores, el primero es el número de semáforos
                 // y el segundo la velocidad (m/s) máxima
                 byte numSemaforos = Byte.parseByte(inputs[0]);
@@ -88,6 +100,12 @@ class Calle {
         this.velMax = velMax;
     }
 
+    public List<Semaforo> getListSemaforos() {
+        List<Semaforo> l = new ArrayList();
+        l.addAll(Arrays.asList(semaforos));
+        return l;
+    }
+
     public Semaforo[] getSemaforos() {
         return semaforos;
     }
@@ -110,7 +128,7 @@ class Calle {
 
     @Override
     public String toString() {
-        return "Calle{" + "semaforos=" + semaforos + ", velMax=" + velMax + '}';
+        return "Calle{" + "semaforos=" + getListSemaforos() + ", velMax=" + velMax + '}';
     }
 }
 
