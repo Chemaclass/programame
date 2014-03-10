@@ -24,6 +24,11 @@ public class Semaforos {
     public static void main(String[] args) {
         new Semaforos().doMain(args);
     }
+    
+    public String[] leer(String input) throws IOException{
+        input = BR.readLine();
+        return input.split(" ");
+    }
 
     public void doMain(String... args) {
         Calle calle;
@@ -33,9 +38,10 @@ public class Semaforos {
             try {
                 log("Introduce 2 números(El número de semáforos y la velocidad máxima):");
 
-                input = BR.readLine();
-
-                String[] inputs = input.split(" ");
+                //input = BR.readLine();
+                String[] inputs = leer(input);
+                // Obtenemos los valores, el primero es el número de semáforos
+                // y el segundo la velocidad (m/s) máxima
                 byte numSemaforos = Byte.parseByte(inputs[0]);
                 float velMax = Float.parseFloat(inputs[1]);
                 calle = new Calle(numSemaforos, velMax);
