@@ -40,6 +40,34 @@ public class Semaforos {
 
 class Calle {
 
+    private List<Semaforo> semaforos;
+    private float velMax;
+
+    public Calle(List<Semaforo> semaforos, float velMax) {
+        this.semaforos = semaforos;
+        this.velMax = velMax;
+    }
+
+    public List<Semaforo> getSemaforos() {
+        return semaforos;
+    }
+
+    public void setSemaforos(List<Semaforo> semaforos) {
+        this.semaforos = semaforos;
+    }
+
+    public float getVelMax() {
+        return velMax;
+    }
+
+    public void setVelMax(float velMax) {
+        this.velMax = velMax;
+    }
+
+    @Override
+    public String toString() {
+        return "Calle{" + "semaforos=" + semaforos + ", velMax=" + velMax + '}';
+    }
 }
 
 class Semaforo {
@@ -51,7 +79,7 @@ class Semaforo {
 
         ABIERTO, CERRADO
     }
-    
+
     private float distanciaAnterior;
     private Estado estado;
 
