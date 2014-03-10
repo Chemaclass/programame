@@ -58,6 +58,20 @@ public class Semaforos {
                 float velMax = Float.parseFloat(inputs[1]);
                 calle = new Calle(numSemaforos, velMax);
 
+                // Obtenemos los datos de los semáforos, 3 por semáforo
+                inputs = leer(input);
+                for (int i = 0, j = 0; i < inputs.length; i += 3, j++) {
+                    float distanciaAnterior = Float.parseFloat(inputs[i]);
+                    float tiempoCerrado = Float.parseFloat(inputs[i + 1]);
+                    float tiempoAbierto = Float.parseFloat(inputs[i + 2]);
+                    //Creamos una nueva instancia Semaforo
+                    Semaforo semaforo = new Semaforo(distanciaAnterior, tiempoCerrado, tiempoAbierto);
+                    //Y la añadimos a la calle
+                    calle.setSemaforo(j, semaforo);
+                }
+
+                log(calle);
+
             } catch (IOException ex) {
                 loge("IOException: " + ex);
             } catch (NumberFormatException ex) {
