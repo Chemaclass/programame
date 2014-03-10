@@ -26,26 +26,26 @@ public class Semaforos {
     }
 
     public void doMain(String... args) {
-
+        Calle calle = new Calle();
         String input = "";
-        
+
         while (!input.equals("0 0")) {
             try {
                 log("Introduce 2 números(El número de semáforos y la velocidad máxima):");
-                
+
                 input = BR.readLine();
-                
+
                 String[] inputs = input.split(" ");
                 byte numSemaforos = Byte.parseByte(inputs[0]);
-                
+
             } catch (IOException ex) {
                 loge("IOException: " + ex);
-            } catch(NumberFormatException ex){
-                loge("NumberFormatException: "+ex);
+            } catch (NumberFormatException ex) {
+                loge("NumberFormatException: " + ex);
             }
         }
-        
-        log("END");       
+
+        log("END");
 
     }
 
@@ -59,7 +59,7 @@ public class Semaforos {
             System.out.println(o);
         }
     }
-    
+
     private void loge(Object o) {
         if (debug) {
             System.err.println(o);
@@ -71,6 +71,9 @@ class Calle {
 
     private List<Semaforo> semaforos;
     private float velMax;
+
+    public Calle() {
+    }
 
     public Calle(List<Semaforo> semaforos, float velMax) {
         this.semaforos = semaforos;
@@ -111,6 +114,9 @@ class Semaforo {
 
     private float distanciaAnterior;
     private Estado estado;
+
+    public Semaforo() {
+    }
 
     public Semaforo(float distanciaAnterior, Estado estado) {
         this.distanciaAnterior = distanciaAnterior;
