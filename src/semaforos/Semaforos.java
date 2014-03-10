@@ -1,8 +1,11 @@
 package semaforos;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,6 +27,26 @@ public class Semaforos {
 
     public void doMain(String... args) {
 
+        String input = "";
+        
+        while (!input.equals("0 0")) {
+            try {
+                log("Introduce 2 números(El número de semáforos y la velocidad máxima):");
+                
+                input = BR.readLine();
+                
+                String[] inputs = input.split(" ");
+                byte numSemaforos = Byte.parseByte(inputs[0]);
+                
+            } catch (IOException ex) {
+                loge("IOException: " + ex);
+            } catch(NumberFormatException ex){
+                loge("NumberFormatException: "+ex);
+            }
+        }
+        
+        log("END");       
+
     }
 
     /**
@@ -34,6 +57,12 @@ public class Semaforos {
     private void log(Object o) {
         if (debug) {
             System.out.println(o);
+        }
+    }
+    
+    private void loge(Object o) {
+        if (debug) {
+            System.err.println(o);
         }
     }
 }
