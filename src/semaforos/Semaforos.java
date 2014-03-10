@@ -20,7 +20,7 @@ public class Semaforos {
 
     //Bandera para controlar debug
     private static final boolean debug = true;
-    private static final String SALIDA = "0 0";
+    private static final String[] SALIDA = {"0", "0"};
 
     public static void main(String[] args) {
         new Semaforos().doMain(args);
@@ -38,7 +38,9 @@ public class Semaforos {
      * @return boolean
      */
     private boolean fin(String[] inputs) {
-        return (inputs.length == 2 && inputs[0].equals("0") && inputs[1].equals("0"));
+        return (inputs.length == 2
+                && inputs[0].equals(SALIDA[0])
+                && inputs[1].equals(SALIDA[1]));
     }
 
     public void doMain(String... args) {
@@ -205,6 +207,6 @@ class Semaforo {
 
     @Override
     public String toString() {
-        return "Semaforo{" + "distanciaAnterior=" + distanciaAnterior + ", estado=" + estadoActual + '}';
+        return "Semaforo{" + "distanciaAnterior=" + distanciaAnterior + ", tiempoCerrado=" + tiempoCerrado + ", tiempoAbierto=" + tiempoAbierto + ", estadoActual=" + estadoActual + '}';
     }
 }
