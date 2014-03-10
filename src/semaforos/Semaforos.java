@@ -2,6 +2,7 @@ package semaforos;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  *
@@ -49,5 +50,34 @@ class Semaforo {
     enum Estado {
 
         ABIERTO, CERRADO
+    }
+    
+    private float distanciaAnterior;
+    private Estado estado;
+
+    public Semaforo(float distanciaAnterior, Estado estado) {
+        this.distanciaAnterior = distanciaAnterior;
+        this.estado = estado;
+    }
+
+    public float getDistanciaAnterior() {
+        return distanciaAnterior;
+    }
+
+    public void setDistanciaAnterior(float distanciaAnterior) {
+        this.distanciaAnterior = distanciaAnterior;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Semaforo{" + "distanciaAnterior=" + distanciaAnterior + ", estado=" + estado + '}';
     }
 }
