@@ -26,7 +26,7 @@ public class Semaforos {
     }
 
     public void doMain(String... args) {
-        Calle calle = new Calle();
+        Calle calle;
         String input = "";
 
         while (!input.equals("0 0")) {
@@ -37,6 +37,8 @@ public class Semaforos {
 
                 String[] inputs = input.split(" ");
                 byte numSemaforos = Byte.parseByte(inputs[0]);
+                float velMax = Float.parseFloat(inputs[1]);
+                calle = new Calle(numSemaforos, velMax);
 
             } catch (IOException ex) {
                 loge("IOException: " + ex);
@@ -69,22 +71,22 @@ public class Semaforos {
 
 class Calle {
 
-    private List<Semaforo> semaforos;
+    private Semaforo[] semaforos;
     private float velMax;
 
     public Calle() {
     }
 
-    public Calle(List<Semaforo> semaforos, float velMax) {
-        this.semaforos = semaforos;
+    public Calle(byte numSemaforos, float velMax) {
+        this.semaforos = new Semaforo[numSemaforos];
         this.velMax = velMax;
     }
 
-    public List<Semaforo> getSemaforos() {
+    public Semaforo[] getSemaforos() {
         return semaforos;
     }
 
-    public void setSemaforos(List<Semaforo> semaforos) {
+    public void setSemaforos(Semaforo[] semaforos) {
         this.semaforos = semaforos;
     }
 
