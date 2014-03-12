@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
+ * https://www.aceptaelreto.com/problem/statement.php?id=113
  * @author chemaclass
  */
 public class Semaforos {
@@ -21,7 +21,13 @@ public class Semaforos {
     //Bandera para controlar debug
     private static final boolean debug = true;
     private static final String[] SALIDA = {"0", "0"};
-
+    /** Calles con semáforos */
+    private List<Calle> calles;
+    
+    public Semaforos(){
+        calles = new ArrayList<>();
+    }
+    
     public static void main(String[] args) {
         new Semaforos().doMain(args);
     }
