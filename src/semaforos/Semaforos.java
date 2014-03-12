@@ -81,6 +81,8 @@ public class Semaforos {
                 loge("IOException: " + ex);
             } catch (NumberFormatException ex) {
                 loge("NumberFormatException: " + ex);
+            } catch(ArrayIndexOutOfBoundsException ex){
+                loge("ArrayIndexOutOfBoundsException: "+ex);
             }
         }
         
