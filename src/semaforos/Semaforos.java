@@ -64,14 +64,17 @@ public class Semaforos {
                 // y el segundo la velocidad (m/s) máxima
                 byte numSemaforos = Byte.parseByte(inputs[0]);
                 float velMax = Float.parseFloat(inputs[1]);
+                //Creamos una nueva calle
                 calle = new Calle(numSemaforos, velMax);
                 
                 log("Introduce 3 números(dist,tiem_cerr,tiem_abie), por cada semáforo:");
                 // Obtenemos los datos de los semáforos, 3 por semáforo
                 inputs = leer(input);
-                
+                //Montamos la calle con los parámetros introducidos por consola
                 calle.setSemaforos(inputs);
-
+                //Añadimos la nueva calle a nuestras calles
+                calles.add(calle);
+                
                 log(calle);
 
             } catch (IOException ex) {
