@@ -65,18 +65,12 @@ public class Semaforos {
                 byte numSemaforos = Byte.parseByte(inputs[0]);
                 float velMax = Float.parseFloat(inputs[1]);
                 calle = new Calle(numSemaforos, velMax);
-
+                
+                log("Introduce 3 números(dist,tiem_cerr,tiem_abie), por cada semáforo:");
                 // Obtenemos los datos de los semáforos, 3 por semáforo
                 inputs = leer(input);
-                for (int i = 0, j = 0; i < inputs.length; i += 3, j++) {
-                    float distanciaAnterior = Float.parseFloat(inputs[i]);
-                    float tiempoCerrado = Float.parseFloat(inputs[i + 1]);
-                    float tiempoAbierto = Float.parseFloat(inputs[i + 2]);
-                    //Creamos una nueva instancia Semaforo
-                    Semaforo semaforo = new Semaforo(distanciaAnterior, tiempoCerrado, tiempoAbierto);
-                    //Y la añadimos a la calle
-                    calle.setSemaforo(j, semaforo);
-                }
+                
+                calle.setSemaforos(inputs);
 
                 log(calle);
 
@@ -134,6 +128,24 @@ class Calle {
 
     public void setSemaforos(Semaforo[] semaforos) {
         this.semaforos = semaforos;
+    }
+    
+    /**
+     * Montamos los semáforos de la calle a partir del array de String que
+     * introducimos por consola
+     * 
+     * @param inputs String[]
+     */
+    public void setSemaforos(String[] inputs){
+        for (int i = 0, j = 0; i < inputs.length; i += 3, j++) {
+            float distanciaAnterior = Float.parseFloat(inputs[i]);
+            float tiempoCerrado = Float.parseFloat(inputs[i + 1]);
+            float tiempoAbierto = Float.parseFloat(inputs[i + 2]);
+            //Creamos una nueva instancia Semaforo
+            Semaforo semaforo = new Semaforo(distanciaAnterior, tiempoCerrado, tiempoAbierto);
+            //Y la añadimos a la calle
+            setSemaforo(j, semaforo);
+        }
     }
 
     public void setSemaforo(int i, Semaforo semaforo) {
