@@ -88,27 +88,17 @@ public class Semaforos {
         
         log("Programa finalizado... obteniendo resultados por calle...");
         //Obtenemos los resultados y los pintamos
-        printResultados(getResultados());
+        printResultados();
         log("END");
     }
     
     /**
-     * Obtenemos los resultados
-     * @return Resultado[]
-     */
-    protected Resultado[] getResultados(){
-        
-        
-        return null;
-    }
-    
-    /**
      * Pinta los resultados
-     * @param re Resultado[]
      */
-    protected void printResultados(Resultado[] re){
-        String s = re.toString();
-        System.out.println(s);
+    protected void printResultados(){
+        for(Calle calle: calles){
+            System.out.println(calle.getVelMed());
+        }
     }
 
     /**
@@ -129,9 +119,6 @@ public class Semaforos {
     }
 }
 
-class Resultado{
-    
-}
 
 class Calle {
 
@@ -188,6 +175,17 @@ class Calle {
 
     public void setVelMax(float velMax) {
         this.velMax = velMax;
+    }
+    
+    /**
+     * Obtenemos la velocidad media 
+     * @return String velocidad media o IMPOSIBLE si no se puede
+     */
+    public String getVelMed(){
+        String velMed = "IMPOSIBLE";
+        
+        
+        return velMed;
     }
 
     @Override
