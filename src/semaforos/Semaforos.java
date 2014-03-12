@@ -83,9 +83,30 @@ public class Semaforos {
                 loge("NumberFormatException: " + ex);
             }
         }
-
+        
+        log("Programa finalizado... obteniendo resultados por calle...");
+        //Obtenemos los resultados y los pintamos
+        printResultados(getResultados());
         log("END");
-
+    }
+    
+    /**
+     * Obtenemos los resultados
+     * @return Resultado[]
+     */
+    protected Resultado[] getResultados(){
+        
+        
+        return null;
+    }
+    
+    /**
+     * Pinta los resultados
+     * @param re Resultado[]
+     */
+    protected void printResultados(Resultado[] re){
+        String s = re.toString();
+        System.out.println(s);
     }
 
     /**
@@ -104,6 +125,10 @@ public class Semaforos {
             System.err.println(o);
         }
     }
+}
+
+class Resultado{
+    
 }
 
 class Calle {
