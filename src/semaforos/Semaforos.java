@@ -1,8 +1,6 @@
 package semaforos;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import utilidades.Utils;
@@ -14,10 +12,6 @@ import utilidades.Utils;
  */
 public class Semaforos {
 
-    /**
-     * Buffer de entrada
-     */
-    public static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
 
     private static final String[] SALIDA = {"0", "0"};
     /**
@@ -34,7 +28,7 @@ public class Semaforos {
     }
 
     private String[] leer(String input) throws IOException {
-        input = BR.readLine();
+        input = Utils.BR.readLine();
         return input.split(" ");
     }
 

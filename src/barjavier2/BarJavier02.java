@@ -3,6 +3,7 @@ package barjavier2;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import utilidades.Utils;
 
 /**
  *
@@ -11,10 +12,6 @@ import java.util.List;
  */
 public class BarJavier02 {
 
-    /**
-     * Buffer de entrada
-     */
-    public static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
     /**
      * Activar/Desactivar el log de depuración
      */
@@ -43,7 +40,7 @@ public class BarJavier02 {
             try {
                 log("Introduce el codigo y los benefícios:");
                 //Leemos la linea
-                input = BR.readLine();
+                input = Utils.BR.readLine();
                 //obtenemos las entradas
                 String[] inputs = input.split(" ");
 

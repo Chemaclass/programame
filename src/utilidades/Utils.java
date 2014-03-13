@@ -1,15 +1,26 @@
 package utilidades;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 /**
  *
  * @author chemaclass
  */
 public class Utils {
 
+    /**
+     * Buffer de entrada
+     */
+    public static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
+
+    /**
+     * Banderas de debug
+     */
     private static final boolean debug = false, debugError = false, subDebug = false;
 
     /**
-     * Pintar si está activado el modo debug
+     * Mostrar un mensaje por consola
      *
      * @param o Object
      */
@@ -20,6 +31,7 @@ public class Utils {
     }
 
     /**
+     * Mostrar un mensaje de error por consola
      *
      * @param o Object
      */
@@ -30,6 +42,7 @@ public class Utils {
     }
 
     /**
+     * Mostrar un mensaje secundario por consola
      *
      * @param o Object
      */

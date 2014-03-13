@@ -3,6 +3,7 @@ package barjavier;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
+import utilidades.Utils;
 
 /**
  * Start: jue 6 de mar 21:00h;
@@ -14,10 +15,6 @@ import java.util.ArrayList;
  */
 public class BarJavier {
 
-    /**
-     * Buffer de entrada
-     */
-    private final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
     /**
      * Lista de semanas
      */
@@ -46,7 +43,7 @@ public class BarJavier {
                 if (log) {
                     System.out.print("Introduce las ganancias para el día '" + semana.getNombreDiaActual() + "'> ");
                 }
-                input = BR.readLine();
+                input = Utils.BR.readLine();
                 if (input.equals("-1") && semana.getDiaActual() == 0) {
                     break;
                 }
