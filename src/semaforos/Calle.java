@@ -46,14 +46,18 @@ public class Calle {
      * @param inputs String[]
      */
     public void setSemaforos(String[] inputs) {
-        for (int i = 0, j = 0; i < inputs.length; i += 3, j++) {
-            float distanciaAnterior = Float.parseFloat(inputs[i]);
-            float tiempoCerrado = Float.parseFloat(inputs[i + 1]);
-            float tiempoAbierto = Float.parseFloat(inputs[i + 2]);
-            //Creamos una nueva instancia Semaforo
-            Semaforo semaforo = new Semaforo(distanciaAnterior, tiempoCerrado, tiempoAbierto);
-            //Y la añadimos a la calle
-            setSemaforo(j, semaforo);
+        try {
+            for (int i = 0, j = 0; i < inputs.length; i += 3, j++) {
+                float distanciaAnterior = Float.parseFloat(inputs[i]);
+                float tiempoCerrado = Float.parseFloat(inputs[i + 1]);
+                float tiempoAbierto = Float.parseFloat(inputs[i + 2]);
+                //Creamos una nueva instancia Semaforo
+                Semaforo semaforo = new Semaforo(distanciaAnterior, tiempoCerrado, tiempoAbierto);
+                //Y la añadimos a la calle
+                setSemaforo(j, semaforo);
+            }
+        } catch (Exception ex) {
+            Utils.de(ex);
         }
     }
 
@@ -82,39 +86,45 @@ public class Calle {
      */
     public float getVelMed() {
         Utils.sd("getVelMed()");
-        float d, t;
+        float d, t, r;
         Semaforo s;
         float velocidad[] = new float[semaforos.length];
+
         for (int i = 0; i < semaforos.length; i++) {
-            s = semaforos[i];
-            d = s.getDistanciaAnterior();
-            //Según el semáforo cogeremos su tiempo de abierto o cerrado
-            if (i % 2 == 0) {
-                t = s.getTiempoCerrado();
-            } else {
-                t = s.getTiempoAbierto();
-            }
-            float r = d / t;
-            //Si es mayor que la velocidad máxima, debemos buscar una a una
-            // hasta dar con alguna
-            if (r > velMax) {
-                Utils.sd("r > velMax == false");
-                for (int j = (int) t + 1; j < d; j++) {
-                    Utils.sd(d + " % " + j + " ? ");
-                    if (d % j == 0) {
-                        Utils.sd(d + " % " + j + " == 0");
-                        //Obtenemos el nuevo tiempo
-                        r = d / j;
-                        Utils.sd("r => " + r);
-                        break;
-                    }
+            try {
+                s = semaforos[i];
+                d = s.getDistanciaAnterior();
+                //Según el semáforo cogeremos su tiempo de abierto o cerrado
+                if (i % 2 == 0) {
+                    t = s.getTiempoCerrado();
+                } else {
+                    t = s.getTiempoAbierto();
                 }
-                r = (r > velMax) ? IMPOSIBLE : r;
-            } else if (r < 0.1f) {
-                r = IMPOSIBLE;
+                r = d / t;
+                //Si es mayor que la velocidad máxima, debemos buscar una a una
+                // hasta dar con alguna
+                if (r > velMax) {
+                    Utils.sd("r > velMax == false");
+                    for (int j = (int) t + 1; j < d; j++) {
+                        Utils.sd(d + " % " + j + " ? ");
+                        if (d % j == 0) {
+                            Utils.sd(d + " % " + j + " == 0");
+                            //Obtenemos el nuevo tiempo
+                            r = d / j;
+                            Utils.sd("r => " + r);
+                            break;
+                        }
+                    }
+                    r = (r > velMax) ? IMPOSIBLE : r;
+                } else if (r < 0.1f) {
+                    r = IMPOSIBLE;
+                }
+                velocidad[i] = r;
+                Utils.sd("velocidad[" + i + "]=" + r + " m/s");
+            } catch (NullPointerException ex) {
+                Utils.de("NullPointerException: " + ex);
+                velocidad[i] = IMPOSIBLE;
             }
-            velocidad[i] = r;
-            Utils.sd("velocidad[" + i + "]=" + r + " m/s");
         }
 
         return getMedia(velocidad);
