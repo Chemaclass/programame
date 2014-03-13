@@ -20,6 +20,10 @@ public class Semaforo {
     private Estado estadoActual;
 
     public Semaforo() {
+        this.distanciaAnterior = 0;
+        this.tiempoCerrado = 0;
+        this.tiempoAbierto = 0;
+        this.estadoActual = Estado.CERRADO;
     }
 
     public Semaforo(float distanciaAnterior, float tiempoCerrado, float tiempoAbierto) {

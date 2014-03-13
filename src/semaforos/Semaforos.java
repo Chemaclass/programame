@@ -84,6 +84,8 @@ public class Semaforos {
                 Utils.de("NumberFormatException: " + ex);
             } catch (ArrayIndexOutOfBoundsException ex) {
                 Utils.de("ArrayIndexOutOfBoundsException: " + ex);
+            } catch (Exception ex) {
+                Utils.de("Exception: " + ex);
             }
         }
 
@@ -98,8 +100,11 @@ public class Semaforos {
      */
     protected void printResultados() {
         for (Calle calle : calles) {
-            System.out.println(calle.getTiempoTarda());
+            try {
+                System.out.println(calle.getTiempoTarda());
+            } catch (ArithmeticException ex) {
+                Utils.de("ArithmeticException: " + ex);
+            }
         }
     }
 }
-
