@@ -11,6 +11,9 @@ import utilidades.Utils;
  */
 public class Calle {
 
+    private static final int IMPOSIBLE = -1;
+    private static final String IMPOSIBLE_STR = "IMPOSIBLE";
+
     private Semaforo[] semaforos;
     private float velMax;
 
@@ -71,16 +74,69 @@ public class Calle {
      *
      * @return String velocidad media o IMPOSIBLE si no se puede
      */
-    public String getVelMed() {
-       
-        String velMed = "IMPOSIBLE";
-       
-        return velMed;
+    public float getVelMed() {
+        Utils.sd("getVelMed()");
+        float d, t;
+        Semaforo s;
+        float velocidad[] = new float[semaforos.length];
+        for (int i = 0; i < semaforos.length; i++) {
+            s = semaforos[i];
+            d = s.getDistanciaAnterior();
+            //Según el semáforo cogeremos su tiempo de abierto o cerrado
+            if (i % 2 == 0) {
+                t = s.getTiempoCerrado();
+            } else {
+                t = s.getTiempoAbierto();
+            }
+            float r = d / t;
+            //Si es mayor que la velocidad máxima, debemos buscar una a una
+            // hasta dar con alguna
+            if (r > velMax) {
+                Utils.sd("r > velMax == false");
+                for (int j = (int) t + 1; j < d; j++) {
+                    Utils.sd(d + " % " + j + " ? ");
+                    if (d % j == 0) {
+                        Utils.sd(d + " % " + j + " == 0");
+                        //Obtenemos el nuevo tiempo
+                        r = d / j;
+                        Utils.sd("r => " + r);
+                        break;
+                    }
+                }
+                r = (r > velMax) ? IMPOSIBLE : r;
+            } else if (r < 0.1f) {
+                r = IMPOSIBLE;
+            }
+            velocidad[i] = r;
+            Utils.sd("velocidad[" + i + "]=" + r + " m/s");
+        }
+
+        return getMedia(velocidad);
+    }
+
+    public String getTiempoTarda() {
+
+        int velMed = (int) getVelMed();
+
+        return (velMed == IMPOSIBLE) ? IMPOSIBLE_STR : "" + getDistanciaTotal() / velMed;
+    }
+
+    private int getDistanciaTotal() {
+        int t = 0;
+        for (Semaforo s : semaforos) {
+            t += s.getDistanciaAnterior();
+        }
+        return t;
     }
 
     private float getMedia(float[] velocidad) {
         float total = 0, cont = 0;
         for (float v : velocidad) {
+            //Con que haya una sola velocidad imposible bastará por dar por imposible
+            // dicha calle
+            if (v == IMPOSIBLE) {
+                return IMPOSIBLE;
+            }
             total += v;
             cont++;
         }

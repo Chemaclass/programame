@@ -98,7 +98,7 @@ public class Semaforos {
      */
     protected void printResultados() {
         for (Calle calle : calles) {
-            System.out.println(calle.getVelMed());
+            System.out.println(calle.getTiempoTarda());
         }
     }
 }

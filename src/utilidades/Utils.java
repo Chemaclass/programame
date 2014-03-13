@@ -6,13 +6,7 @@ package utilidades;
  */
 public class Utils {
 
-    private static final boolean debug = false, subDebug = true;
-
-    public static void sd(Object o) {
-        if (subDebug) {
-            System.out.println(o);
-        }
-    }
+    private static final boolean debug = false, subDebug = false;
 
     /**
      * Pintar si está activado el modo debug
@@ -25,9 +19,23 @@ public class Utils {
         }
     }
 
+    /**
+     *
+     * @param o Object
+     */
     public static void de(Object o) {
         if (debug) {
             System.err.println(o);
+        }
+    }
+
+    /**
+     *
+     * @param o Object
+     */
+    public static void sd(Object o) {
+        if (subDebug) {
+            System.out.println(o);
         }
     }
 }
