@@ -130,7 +130,7 @@ public class Calle {
 
         int velMed = (int) getVelMed();
 
-        return (velMed == IMPOSIBLE) ? IMPOSIBLE_STR : "" + getDistanciaTotal() / velMed;
+        return (velMed == IMPOSIBLE) ? IMPOSIBLE_STR : String.valueOf(getDistanciaTotal() / velMed);
     }
 
     /**
