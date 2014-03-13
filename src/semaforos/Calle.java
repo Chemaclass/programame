@@ -88,7 +88,7 @@ public class Calle {
         Utils.sd("getVelMed()");
         float d, t, r;
         Semaforo s;
-        float velocidad[] = new float[semaforos.length];
+        float velocidades[] = new float[semaforos.length];
 
         for (int i = 0; i < semaforos.length; i++) {
             try {
@@ -119,15 +119,15 @@ public class Calle {
                 } else if (r < 0.1f) {
                     r = IMPOSIBLE;
                 }
-                velocidad[i] = r;
+                velocidades[i] = r;
                 Utils.sd("velocidad[" + i + "]=" + r + " m/s");
             } catch (NullPointerException ex) {
                 Utils.de("NullPointerException: " + ex);
-                velocidad[i] = IMPOSIBLE;
+                velocidades[i] = IMPOSIBLE;
             }
         }
 
-        return getMedia(velocidad);
+        return getMedia(velocidades);
     }
 
     /**
@@ -160,12 +160,12 @@ public class Calle {
     /**
      * Obtenemos la media de las velocidades
      *
-     * @param velocidad float[] Array de velocidades
+     * @param velocidades float[] Array de velocidades
      * @return float La media de toda las velocidades pasadas en el array
      */
-    private float getMedia(float[] velocidad) {
+    private float getMedia(float[] velocidades) {
         float total = 0, cont = 0;
-        for (float v : velocidad) {
+        for (float v : velocidades) {
             //Con que haya una sola velocidad imposible bastará por dar por imposible
             // dicha calle
             if (v == IMPOSIBLE) {
