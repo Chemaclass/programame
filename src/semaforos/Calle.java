@@ -57,6 +57,12 @@ public class Calle {
         }
     }
 
+    /**
+     * Establecer un nuevo semáforo en la calle
+     *
+     * @param i int Posición a colocar
+     * @param semaforo Semaforo
+     */
     public void setSemaforo(int i, Semaforo semaforo) {
         semaforos[i] = semaforo;
     }
@@ -114,6 +120,12 @@ public class Calle {
         return getMedia(velocidad);
     }
 
+    /**
+     * Obtenemos el tiempo que tarda el coche en segundos, teniendo en cuenta la
+     * velocidad media a la que tiene que ir
+     *
+     * @return String
+     */
     public String getTiempoTarda() {
 
         int velMed = (int) getVelMed();
@@ -121,6 +133,12 @@ public class Calle {
         return (velMed == IMPOSIBLE) ? IMPOSIBLE_STR : "" + getDistanciaTotal() / velMed;
     }
 
+    /**
+     * Obtenemos la distancia todal que tendrá que recorrer, a partir de las
+     * distancias que existen entre los semáforos de la calle
+     *
+     * @return int
+     */
     private int getDistanciaTotal() {
         int t = 0;
         for (Semaforo s : semaforos) {
@@ -129,6 +147,12 @@ public class Calle {
         return t;
     }
 
+    /**
+     * Obtenemos la media de las velocidades
+     *
+     * @param velocidad float[] Array de velocidades
+     * @return float La media de toda las velocidades pasadas en el array
+     */
     private float getMedia(float[] velocidad) {
         float total = 0, cont = 0;
         for (float v : velocidad) {
