@@ -29,6 +29,9 @@ public class Marcador {
                 }
                 //guardamos esa lista en nuestras listas
                 Listas.LISTAS.add(lista);
+
+                arrToStr(Listas.LISTAS);
+
             } catch (MalFormadoException ex) {
                 de(ex);
             }
@@ -80,16 +83,11 @@ class Lista {
         if (!esValido(ss)) {
             throw new MalFormadoException();
         }
-        System.out.println(">");
-        arrToStr(ss);
-        System.out.println("<");
         //Each todos los elementos
         for (String s1 : ss) {
             Character c = s1.charAt(0);
             LISTA.add(c);
         }
-        arrToStr(LISTA);
-        arrToStr(Listas.LISTAS);
     }
 
     /**
@@ -99,8 +97,21 @@ class Lista {
      * @return boolean
      */
     private boolean esValido(String[] ss) {
-        for (String s : ss) {
-            if (s.length() > 1) {
+        //Para que sea válido no deben tener más de un char
+        String s;
+        if (ss.length < 1) {
+            return false;
+        }
+        for (int i = 0; i < ss.length; i++) {
+            s = ss[i];
+            //Si esun char enmedio y no es el final
+            if (s.length() > 1 && i != ss.length - 1) {
+                return false;
+            } //Si es el último y es distinto de -1
+            else if (i == ss.length - 1 && !s.equals("-1")) {
+                return false;
+            } //Si no es un número
+            else if (!isNumeric(s)) {
                 return false;
             }
         }
