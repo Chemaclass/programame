@@ -3,6 +3,7 @@ package marcadores;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import static marcadores.Dig.P.*;
 import static utilidades.Utils.*;
 
 /**
@@ -128,9 +129,9 @@ class Lista {
      * @return int Número de cambios del marcador
      */
     public int getNumCambios() {
-        int numCambios = 0;
+        int numEncendidos = 0, numApagados = 0;
         //Str donde guardaremos el marcador que está visualizando actualmente
-        String aux = "";
+        String aux = "", aux2 = "";
         //Bandera que indica si se llegó a la mitad
         boolean flag = false;
         //Contador 
@@ -150,13 +151,14 @@ class Lista {
                     }
                 }
                 int numByStr = getNumByString(aux);
-                numCambios += numByStr;
+                numEncendidos += numByStr;
                 d("aux: " + aux + " | " + flag + " | numByStr: " + numByStr
-                        + " | numCambios: " + numCambios);
+                        + " | numEncendidos: " + numEncendidos
+                        + " | numApagados: " + numApagados);
             }
             flag = true;
         } while (c++ < numLimite);
-        return numCambios;
+        return numEncendidos + numApagados;
     }
 
     /**
@@ -185,25 +187,25 @@ class Lista {
     private int getNumByChar(Character c) {
         switch (c) {
             case '0':
-                return 6;
+                return Dig.CERO.POS.length;
             case '1':
-                return 2;
+                return Dig.UNO.POS.length;
             case '2':
-                return 5;
+                return Dig.DOS.POS.length;
             case '3':
-                return 5;
+                return Dig.TRES.POS.length;
             case '4':
-                return 4;
+                return Dig.CUATRO.POS.length;
             case '5':
-                return 5;
+                return Dig.CINCO.POS.length;
             case '6':
-                return 6;
+                return Dig.SEIS.POS.length;
             case '7':
-                return 3;
+                return Dig.SIETE.POS.length;
             case '8':
-                return 7;
+                return Dig.OCHO.POS.length;
             case '9':
-                return 6;
+                return Dig.NUEVE.POS.length;
             default:
                 return 0;
         }
@@ -218,6 +220,84 @@ class Lista {
         return s + "}";
     }
 
+}
+
+/**
+ * Representa un dígito numérico
+ *
+ * @author chemaclass
+ */
+enum Dig {
+
+    CERO(new P[]{AR, AB, I_AR, I_AB, D_AR, D_AB}),
+    UNO(new P[]{D_AR, D_AB}),
+    DOS(new P[]{AR, D_AR, CE, I_AB, AB}),
+    TRES(new P[]{AR, AB, D_AR, D_AB, CE}),
+    CUATRO(new P[]{I_AR, CE, D_AR, D_AB}),
+    CINCO(new P[]{AR, I_AR, CE, D_AB, AB}),
+    SEIS(new P[]{AR, AB, I_AR, I_AB, D_AB, CE}),
+    SIETE(new P[]{AR, D_AR, D_AB}),
+    OCHO(new P[]{AR, AB, I_AR, I_AB, D_AR, D_AB, CE}),
+    NUEVE(new P[]{AR, AB, I_AR, D_AR, D_AB, CE});
+
+    /**
+     * Posiciones led posibles
+     */
+    enum P {
+
+        /**
+         * ARRIBA
+         */
+        AR,
+        /**
+         * ABAJO
+         */
+        AB,
+        /**
+         * CENTRO
+         */
+        CE,
+        /**
+         * IZQUIERDA ARRIBA
+         */
+        I_AR,
+        /**
+         * IZQUIERDA ABAJO
+         */
+        I_AB,
+        /**
+         * DERECHA ARRIBA
+         */
+        D_AR,
+        /**
+         * DERECHA ABAJO
+         */
+        D_AB;
+    }
+
+    public final P[] POS;
+
+    private Dig(P[] pos) {
+        this.POS = pos;
+    }
+
+    /**
+     * Devuelve el número de dígitos comunes que tienen dos números (led)
+     *
+     * @param num Num
+     * @return int número de dígitos comunes
+     */
+    public int getComun(Dig num) {
+        int comun = 0;
+        for (P p : POS) {
+            for (P p2 : num.POS) {
+                if (p.equals(p2)) {
+                    comun++;
+                }
+            }
+        }
+        return comun;
+    }
 }
 
 /**
