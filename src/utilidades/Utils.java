@@ -63,9 +63,24 @@ public class Utils {
         if (debug) {
             System.out.print("Array{ ");
             for (Object o : arr) {
-                System.out.print(o+", ");
+                System.out.print(o + ", ");
             }
             System.out.println("}");
         }
+    }
+
+    /**
+     * Comprobar si un String es numérico
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str) {
+        try {
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }
