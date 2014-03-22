@@ -17,7 +17,7 @@ public class Utils {
     /**
      * Banderas de debug
      */
-    private static final boolean flag = true;
+    private static final boolean flag = false;
     //private static final boolean debug = false, debugError = false, subDebug = false;
     private static final boolean debug = flag, debugError = flag, subDebug = flag;
 
@@ -69,6 +69,28 @@ public class Utils {
         }
     }
 
+    public static String toStr(Object... a) {
+        if (debug) {
+            String s = "{ ";
+            for (Object c : a) {
+                s += c + ",";
+            }
+            return s + "}";
+        }
+        return "";
+    }
+
+    public static String toStr(char[] a) {
+        if (debug) {
+            String s = "{ ";
+            for (char c : a) {
+                s += c + ",";
+            }
+            return s + "}";
+        }
+        return "";
+    }
+
     /**
      * Comprobar si un String es numérico
      *
@@ -82,5 +104,25 @@ public class Utils {
             return false;
         }
         return true;
+    }
+
+    public static String lpad(String str, int leng) {
+        if (leng < str.length() && leng > 0) {
+            return str.substring(0, leng);
+        }
+        for (int i = 0; i < (leng - str.length()); i++) {
+            str = " " + str;
+        }
+        return str;
+    }
+
+    public static String rpad(String str, int leng) {
+        if (leng < str.length() && leng > 0) {
+            return str.substring(0, leng);
+        }
+        for (int i = str.length(); i < leng; i++) {
+            str += " ";
+        }
+        return str;
     }
 }
