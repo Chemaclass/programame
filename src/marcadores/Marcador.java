@@ -84,7 +84,9 @@ class Lista {
             throw new MalFormadoException();
         }
         //Each todos los elementos
-        for (String s1 : ss) {
+        String s1;//El último elemento será -1 (Por eso no lo incluimos)
+        for (int i = 0; i < ss.length - 1; i++) {
+            s1 = ss[i];
             Character c = s1.charAt(0);
             LISTA.add(c);
         }
@@ -99,6 +101,7 @@ class Lista {
     private boolean esValido(String[] ss) {
         //Para que sea válido no deben tener más de un char
         String s;
+        //Si sólo tiene espacios en blanco
         if (ss.length < 1) {
             return false;
         }
@@ -115,18 +118,70 @@ class Lista {
                 return false;
             }
         }
+        arrToStr(ss);
         return true;
     }
 
+    /**
+     * Devuelve el número de cambios de la lista
+     *
+     * @return int Número de cambios del marcador
+     */
     public int getNumCambios() {
         int numCambios = 0;
-        for (Character c : LISTA) {
+        //Str donde guardaremos el marcador que está visualizando actualmente
+        String aux = "";
+        //Bandera que indica si se llegó a la mitad
+        boolean flag = false;
+        //Contador 
+        byte c = 0, numLimite = 2;
+        do {
+            for (Character CHAR : LISTA) {
+                //Si no se llegó a la mitad
+                if (!flag) {
+                    Character ch = CHAR;
+                    aux += ch;
+                } else {
+                    try {
+                        aux = aux.substring(1, aux.length());
+                    } catch (StringIndexOutOfBoundsException e) {
+                        de(e);
+                        break;
+                    }
+                }
+                int numByStr = getNumByString(aux);
+                numCambios += numByStr;
+                d("aux: " + aux + " | " + flag + " | numByStr: " + numByStr
+                        + " | numCambios: " + numCambios);
+            }
+            flag = true;
+        } while (c++ < numLimite);
+        return numCambios;
+    }
 
-            numCambios += getNumByChar(c);
+    /**
+     * Obtenemos el número de cambios que tiene un str
+     *
+     * @param s String
+     * @return int numCambios
+     */
+    private int getNumByString(String s) {
+        int numCambios = 0;
+        for (Character c : s.toCharArray()) {
+            int numCambiosChar = getNumByChar(c);
+            numCambios += numCambiosChar;
+            d(" || numCambiosChar: " + numCambiosChar
+                    + " | numCambios: " + numCambios);
         }
         return numCambios;
     }
 
+    /**
+     * Obtenemos el número de cambios que tiene un char
+     *
+     * @param c Character
+     * @return int posiciones que ocupa
+     */
     private int getNumByChar(Character c) {
         switch (c) {
             case '0':
