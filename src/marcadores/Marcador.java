@@ -17,15 +17,21 @@ public class Marcador {
 
     private void doMain(String... args) throws IOException {
         Lista lista;
-        String buffer;
+        String buffer = "";
         do {
-            d("Introduce un número: ");
-            buffer = BR.readLine();
-            //Generamos una lista de chars
-            lista = new Lista(buffer);
-            if(buffer.equals("-1"))break;
-            //guardamos esa lista en nuestras listas
-            Listas.LISTAS.add(lista);
+            try {
+                d("Introduce un número: ");
+                buffer = BR.readLine();
+                //Generamos una lista de chars
+                lista = new Lista(buffer);
+                if (buffer.equals("-1")) {
+                    break;
+                }
+                //guardamos esa lista en nuestras listas
+                Listas.LISTAS.add(lista);
+            } catch (MalFormadoException ex) {
+                de(ex);
+            }
         } while (!buffer.equals("-1"));
 
         Listas.printResultado();
@@ -33,12 +39,20 @@ public class Marcador {
 
 }
 
+/**
+ * Clase encargada de guardar todas las listas
+ *
+ * @author chemaclass
+ */
 class Listas {
 
     public static final List<Lista> LISTAS;
 
     static {
         LISTAS = new LinkedList<>();
+    }
+
+    private Listas() {
     }
 
     public static void printResultado() {
@@ -48,19 +62,51 @@ class Listas {
     }
 }
 
+/**
+ * Guarda una lista de números que representan un marcador
+ *
+ * @author chemaclass
+ */
 class Lista {
 
     //Lista con los caracteres
     private final List<Character> LISTA;
-    
-    public Lista(String s) {
+
+    public Lista(String s) throws MalFormadoException {
         //Generamos una lista a partir de la cadena pasada
         LISTA = new LinkedList<>();
-        for (char c : s.toCharArray()) {
+        //Dividimos por espacios
+        String[] ss = s.split(" ");
+        if (!esValido(ss)) {
+            throw new MalFormadoException();
+        }
+        System.out.println(">");
+        arrToStr(ss);
+        System.out.println("<");
+        //Each todos los elementos
+        for (String s1 : ss) {
+            Character c = s1.charAt(0);
             LISTA.add(c);
         }
+        arrToStr(LISTA);
+        arrToStr(Listas.LISTAS);
     }
-    
+
+    /**
+     * Comprobamos si el número dado está entre 9 y 0
+     *
+     * @param ss String []
+     * @return boolean
+     */
+    private boolean esValido(String[] ss) {
+        for (String s : ss) {
+            if (s.length() > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int getNumCambios() {
         int numCambios = 0;
         for (Character c : LISTA) {
@@ -69,7 +115,7 @@ class Lista {
         }
         return numCambios;
     }
-    
+
     private int getNumByChar(Character c) {
         switch (c) {
             case '0':
@@ -97,4 +143,28 @@ class Lista {
         }
     }
 
+    @Override
+    public String toString() {
+        String s = "Lista{ ";
+        for (Character l : LISTA) {
+            s += l + ",";
+        }
+        return s + "}";
+    }
+
+}
+
+/**
+ * Excepción para controlar una entrada mal formada. Las entradas deben estar
+ * dadas por número de entre 0 y 9, separadas por un espacio.
+ *
+ * @author chemaclass
+ */
+class MalFormadoException extends Exception {
+
+    private static final String ms = "Entrada mal formada.";
+
+    public MalFormadoException() {
+        super(ms);
+    }
 }
