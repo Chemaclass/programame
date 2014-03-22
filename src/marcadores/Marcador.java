@@ -185,7 +185,7 @@ class Lista {
 
     private int getNumApagadosByString(String s, String s2) {
         int numCambios = 0;
-       
+        
         return numCambios;
     }
 
@@ -196,30 +196,7 @@ class Lista {
      * @return int posiciones que ocupa
      */
     private int getNumByChar(Character c) {
-        switch (c) {
-            case '0':
-                return Dig.CERO.POS.length;
-            case '1':
-                return Dig.UNO.POS.length;
-            case '2':
-                return Dig.DOS.POS.length;
-            case '3':
-                return Dig.TRES.POS.length;
-            case '4':
-                return Dig.CUATRO.POS.length;
-            case '5':
-                return Dig.CINCO.POS.length;
-            case '6':
-                return Dig.SEIS.POS.length;
-            case '7':
-                return Dig.SIETE.POS.length;
-            case '8':
-                return Dig.OCHO.POS.length;
-            case '9':
-                return Dig.NUEVE.POS.length;
-            default:
-                return 0;
-        }
+        return Dig.getByChar(c).POS.length;       
     }
 
     @Override
@@ -308,6 +285,33 @@ enum Dig {
             }
         }
         return comun;
+    }
+
+    public static Dig getByChar(char c) {
+        switch (c) {
+            case '0':
+                return Dig.CERO;
+            case '1':
+                return Dig.UNO;
+            case '2':
+                return Dig.DOS;
+            case '3':
+                return Dig.TRES;
+            case '4':
+                return Dig.CUATRO;
+            case '5':
+                return Dig.CINCO;
+            case '6':
+                return Dig.SEIS;
+            case '7':
+                return Dig.SIETE;
+            case '8':
+                return Dig.OCHO;
+            case '9':
+                return Dig.NUEVE;
+            default:
+                return null;
+        }
     }
 }
 
