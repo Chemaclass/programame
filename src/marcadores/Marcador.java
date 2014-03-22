@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import static marcadores.Dig.P.*;
-import static utilidades.Utils.*;
+import utilidades.Utils;
 
 /**
  *
@@ -21,8 +21,8 @@ public class Marcador {
         String buffer = "";
         do {
             try {
-                d("Introduce un número: ");
-                buffer = BR.readLine();
+                Utils.d("Introduce un número: ");
+                buffer = Utils.BR.readLine();
                 //Generamos una lista de chars
                 lista = new Lista(buffer);
                 if (buffer.equals("-1")) {
@@ -31,10 +31,10 @@ public class Marcador {
                 //guardamos esa lista en nuestras listas
                 Listas.LISTAS.add(lista);
 
-                arrToStr(Listas.LISTAS);
+                Utils.d(Utils.toStr(Listas.LISTAS));
 
             } catch (MalFormadoException ex) {
-                de(ex);
+                Utils.de(ex);
             }
         } while (!buffer.equals("-1"));
 
@@ -115,11 +115,10 @@ class Lista {
             else if (i == ss.length - 1 && !s.equals("-1")) {
                 return false;
             } //Si no es un número
-            else if (!isNumeric(s)) {
+            else if (!Utils.isNumeric(s)) {
                 return false;
             }
         }
-        arrToStr(ss);
         return true;
     }
 
@@ -129,9 +128,9 @@ class Lista {
      * @return int Número de cambios del marcador
      */
     public int getNumCambios() {
-        int numEncendidos = 0, numApagados = 0;
+        int nCambios = 0;
         //Str donde guardaremos el marcador que está visualizando actualmente
-        String aux = "", aux2 = "";
+        String actual = "", aux = "";
         //Bandera que indica si se llegó a la mitad
         boolean flag = false;
         //Contador 
@@ -141,52 +140,63 @@ class Lista {
                 //Si no se llegó a la mitad
                 if (!flag) {
                     Character ch = CHAR;
-                    aux += ch;
+                    actual += ch;
                 } else {
                     try {
-                        aux = aux.substring(1, aux.length());
+                        actual = actual.substring(1, actual.length());
                     } catch (StringIndexOutOfBoundsException e) {
-                        de(e);
+                        Utils.de("StringIndexOutOfBoundsException. break;");
                         break;
                     }
                 }
-                int numEncByStr = getNumEncendidosByString(aux);
-                int numApaByStr = getNumApagadosByString(aux, aux2);
-                numEncendidos += numEncByStr;
-                numApagados += numApaByStr;
-                aux2 = aux;
-                d("aux: " + aux + " | " + flag
-                        + " | numEncByStr: " + numEncByStr
-                        + " | numApaByStr: " + numApaByStr
-                        + " || numEncendidos: " + numEncendidos
-                        + " | numApagados: " + numApagados);
+                nCambios += getNumByString(actual, aux);
+
+                Utils.d("actual: " + actual + " - aux: " + aux + " | " + flag
+                        + " || nCambios: " + nCambios);
+                //Guardamos la imagen actual en una auxiliar
+                aux = actual;
             }
             flag = true;
         } while (c++ < numLimite);
-        return (numApagados + numEncendidos);
+        //Multiplicamos por 2 porque nos da la mitad del resultado
+        return nCambios * 2;
     }
 
     /**
-     * Obtenemos el número de cambios que tiene un str
+     * Obtenemos el número de cambios que existen entre dos Str
      *
-     * @param s String
-     * @return int numCambios
+     * @param s String primera imagen
+     * @param s2 String segunda imagen
+     * @return int Número de cambios
      */
-    private int getNumEncendidosByString(String s) {
-        int numCambios = 0;
-        for (Character c : s.toCharArray()) {
-            int numCambiosChar = getNumByChar(c);
-            numCambios += numCambiosChar;
-            d(" || numCambiosChar: " + numCambiosChar
-                    + " | numCambios: " + numCambios);
-        }
-        return numCambios;
-    }
+    private int getNumByString(String s, String s2) {
+        int nCambios = 0;
+        Dig d1 = Dig.VACIO, d2;
+        char[] carray = s.toCharArray();
+        String saux = Utils.lpad(s2, s.length());
+        char[] carray2 = saux.toCharArray();
+        Utils.d("--- carray: " + Utils.toStr(carray) + " | carray2: " + Utils.toStr(carray2));
+        Utils.d(" ||| s: " + s + " | saux: " + saux);
 
-    private int getNumApagadosByString(String s, String s2) {
-        int numCambios = 0;
-        
-        return numCambios;
+        for (int i = 0; i < carray.length; i++) {
+            try {
+                d1 = Dig.getByChar(carray[i]);
+                d2 = Dig.getByChar(carray2[i]);
+
+                nCambios += d1.getDif(d2);
+
+                Utils.d(" >|| d1: " + d1.name() + " || d2: " + d2.name()
+                        + " | nCambios: " + nCambios);
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                //de("> a > ArrayIndexOutOfBoundsException. ");
+                nCambios += d1.POS.length;
+                Utils.d("nCambios=> " + nCambios);
+            } catch (NullPointerException e) {
+                Utils.de("> a > NullPointerException. ");
+            }
+        }
+        return nCambios;
     }
 
     /**
@@ -194,11 +204,10 @@ class Lista {
      *
      * @param c Character
      * @return int posiciones que ocupa
+     *
+     * private int getNumByChar(Character c) { return
+     * Dig.getByChar(c).POS.length; }
      */
-    private int getNumByChar(Character c) {
-        return Dig.getByChar(c).POS.length;       
-    }
-
     @Override
     public String toString() {
         String s = "Lista{ ";
@@ -217,6 +226,7 @@ class Lista {
  */
 enum Dig {
 
+    VACIO(new P[]{}),
     CERO(new P[]{AR, AB, I_AR, I_AB, D_AR, D_AB}),
     UNO(new P[]{D_AR, D_AB}),
     DOS(new P[]{AR, D_AR, CE, I_AB, AB}),
@@ -275,7 +285,7 @@ enum Dig {
      * @param num Num
      * @return int número de dígitos comunes
      */
-    public int getComun(Dig num) {
+    private int getComun(Dig num) {
         int comun = 0;
         for (P p : POS) {
             for (P p2 : num.POS) {
@@ -287,7 +297,18 @@ enum Dig {
         return comun;
     }
 
-    public static Dig getByChar(char c) {
+    /**
+     * Devuelve el número de dígitos diferentes que tienen dos dígitos led. Es
+     * el resultado de el número de dígitos totales - los que tienen en común
+     *
+     * @param num Num
+     * @return int número de dígitos diferentes
+     */
+    public int getDif(Dig num) {
+        return POS.length - getComun(num);
+    }
+
+    public static Dig getByChar(Character c) {
         switch (c) {
             case '0':
                 return Dig.CERO;
@@ -310,7 +331,7 @@ enum Dig {
             case '9':
                 return Dig.NUEVE;
             default:
-                return null;
+                return Dig.VACIO;
         }
     }
 }
