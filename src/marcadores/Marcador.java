@@ -137,7 +137,7 @@ class Lista {
         //Contador 
         byte c = 0, numLimite = 2;
         do {
-            for (Character CHAR : LISTA) {
+            for (final Character CHAR : LISTA) {
                 //Si no se llegó a la mitad
                 if (!flag) {
                     Character ch = CHAR;
@@ -150,15 +150,20 @@ class Lista {
                         break;
                     }
                 }
-                int numByStr = getNumByString(aux);
-                numEncendidos += numByStr;
-                d("aux: " + aux + " | " + flag + " | numByStr: " + numByStr
-                        + " | numEncendidos: " + numEncendidos
+                int numEncByStr = getNumEncendidosByString(aux);
+                int numApaByStr = getNumApagadosByString(aux, aux2);
+                numEncendidos += numEncByStr;
+                numApagados += numApaByStr;
+                aux2 = aux;
+                d("aux: " + aux + " | " + flag
+                        + " | numEncByStr: " + numEncByStr
+                        + " | numApaByStr: " + numApaByStr
+                        + " || numEncendidos: " + numEncendidos
                         + " | numApagados: " + numApagados);
             }
             flag = true;
         } while (c++ < numLimite);
-        return numEncendidos + numApagados;
+        return (numApagados + numEncendidos);
     }
 
     /**
@@ -167,7 +172,7 @@ class Lista {
      * @param s String
      * @return int numCambios
      */
-    private int getNumByString(String s) {
+    private int getNumEncendidosByString(String s) {
         int numCambios = 0;
         for (Character c : s.toCharArray()) {
             int numCambiosChar = getNumByChar(c);
@@ -175,6 +180,12 @@ class Lista {
             d(" || numCambiosChar: " + numCambiosChar
                     + " | numCambios: " + numCambios);
         }
+        return numCambios;
+    }
+
+    private int getNumApagadosByString(String s, String s2) {
+        int numCambios = 0;
+       
         return numCambios;
     }
 
