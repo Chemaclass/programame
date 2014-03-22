@@ -17,7 +17,9 @@ public class Utils {
     /**
      * Banderas de debug
      */
-    private static final boolean debug = false, debugError = false, subDebug = false;
+    private static final boolean flag = true;
+    //private static final boolean debug = false, debugError = false, subDebug = false;
+    private static final boolean debug = flag, debugError = flag, subDebug = flag;
 
     /**
      * Mostrar un mensaje por consola
@@ -49,6 +51,21 @@ public class Utils {
     public static void sd(Object o) {
         if (subDebug) {
             System.out.println(o);
+        }
+    }
+
+    /**
+     * Pintar un str a partir de un array
+     *
+     * @param arr Array
+     */
+    public static void arrToStr(Object... arr) {
+        if (debug) {
+            System.out.print("Array{ ");
+            for (Object o : arr) {
+                System.out.print(o+", ");
+            }
+            System.out.println("}");
         }
     }
 }
