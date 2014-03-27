@@ -3,7 +3,7 @@ package marcadores;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import utilidades.Utils;
+import utils.U;
 
 /**
  *
@@ -20,8 +20,8 @@ public class Marcador {
         String buffer = "";
         do {
             try {
-                Utils.d("Introduce un número: ");
-                buffer = Utils.BR.readLine();
+                U.d("Introduce un número: ");
+                buffer = U.BR.readLine();
                 //Generamos una lista de chars
                 lista = new Lista(buffer);
                 if (buffer.equals("-1")) {
@@ -30,10 +30,10 @@ public class Marcador {
                 //guardamos esa lista en nuestras listas
                 Listas.LISTAS.add(lista);
 
-                Utils.d(Utils.toStr(Listas.LISTAS));
+                U.d(U.toStr(Listas.LISTAS));
 
             } catch (MalFormadoException ex) {
-                Utils.de(ex);
+                U.de(ex);
             }
         } while (!buffer.equals("-1"));
 

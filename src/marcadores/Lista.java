@@ -2,7 +2,7 @@ package marcadores;
 
 import java.util.LinkedList;
 import java.util.List;
-import utilidades.Utils;
+import utils.U;
 
 /**
  * Guarda una lista de números que representan un marcador
@@ -53,7 +53,7 @@ public class Lista {
             else if (i == ss.length - 1 && !s.equals("-1")) {
                 return false;
             } //Si no es un número
-            else if (!Utils.isNumeric(s)) {
+            else if (!U.isNumeric(s)) {
                 return false;
             }
         }
@@ -83,13 +83,13 @@ public class Lista {
                     try {
                         actual = actual.substring(1, actual.length());
                     } catch (StringIndexOutOfBoundsException e) {
-                        Utils.de("StringIndexOutOfBoundsException. break;");
+                        U.de("StringIndexOutOfBoundsException. break;");
                         break;
                     }
                 }
                 nCambios += getNumByString(actual, aux);
 
-                Utils.d("actual: " + actual + " - aux: " + aux + " | " + flag
+                U.d("actual: " + actual + " - aux: " + aux + " | " + flag
                         + " || nCambios: " + nCambios);
                 //Guardamos la imagen actual en una auxiliar
                 aux = actual;
@@ -111,10 +111,10 @@ public class Lista {
         int nCambios = 0;
         Dig d1 = Dig.VACIO, d2;
         char[] carray = s.toCharArray();
-        String saux = Utils.lpad(s2, s.length());
+        String saux = U.lpad(s2, s.length());
         char[] carray2 = saux.toCharArray();
-        Utils.d("--- carray: " + Utils.toStr(carray) + " | carray2: " + Utils.toStr(carray2));
-        Utils.d(" ||| s: " + s + " | saux: " + saux);
+        U.d("--- carray: " + U.toStr(carray) + " | carray2: " + U.toStr(carray2));
+        U.d(" ||| s: " + s + " | saux: " + saux);
 
         for (int i = 0; i < carray.length; i++) {
             try {
@@ -123,15 +123,15 @@ public class Lista {
 
                 nCambios += d1.getDif(d2);
 
-                Utils.d(" >|| d1: " + d1.name() + " || d2: " + d2.name()
+                U.d(" >|| d1: " + d1.name() + " || d2: " + d2.name()
                         + " | nCambios: " + nCambios);
 
             } catch (ArrayIndexOutOfBoundsException e) {
                 //de("> a > ArrayIndexOutOfBoundsException. ");
                 nCambios += d1.POS.length;
-                Utils.d("nCambios=> " + nCambios);
+                U.d("nCambios=> " + nCambios);
             } catch (NullPointerException e) {
-                Utils.de("> a > NullPointerException. ");
+                U.de("> a > NullPointerException. ");
             }
         }
         return nCambios;
