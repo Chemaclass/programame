@@ -3,7 +3,7 @@ package semaforos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import utilidades.Utils;
+import utils.U;
 
 /**
  *
@@ -57,7 +57,7 @@ public class Calle {
                 setSemaforo(j, semaforo);
             }
         } catch (Exception ex) {
-            Utils.de(ex);
+            U.de(ex);
         }
     }
 
@@ -85,7 +85,6 @@ public class Calle {
      * @return String velocidad media o IMPOSIBLE si no se puede
      */
     public float getVelMed() {
-        Utils.sd("getVelMed()");
         float d, t, r;
         Semaforo s;
         float velocidades[] = new float[semaforos.length];
@@ -104,14 +103,14 @@ public class Calle {
                 //Si es mayor que la velocidad máxima, debemos buscar una a una
                 // hasta dar con alguna
                 if (r > velMax) {
-                    Utils.sd("r > velMax == false");
+                    U.d("r > velMax == false");
                     for (int j = (int) t + 1; j < d; j++) {
-                        Utils.sd(d + " % " + j + " ? ");
+                        U.d(d + " % " + j + " ? ");
                         if (d % j == 0) {
-                            Utils.sd(d + " % " + j + " == 0");
+                            U.d(d + " % " + j + " == 0");
                             //Obtenemos el nuevo tiempo
                             r = d / j;
-                            Utils.sd("r => " + r);
+                            U.d("r => " + r);
                             break;
                         }
                     }
@@ -120,9 +119,9 @@ public class Calle {
                     r = IMPOSIBLE;
                 }
                 velocidades[i] = r;
-                Utils.sd("velocidad[" + i + "]=" + r + " m/s");
+                U.d("velocidad[" + i + "]=" + r + " m/s");
             } catch (NullPointerException ex) {
-                Utils.de("NullPointerException: " + ex);
+                U.de("NullPointerException: " + ex);
                 velocidades[i] = IMPOSIBLE;
             }
         }

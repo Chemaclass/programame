@@ -3,7 +3,7 @@ package semaforos;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import utilidades.Utils;
+import utils.U;
 
 /**
  * https://www.aceptaelreto.com/problem/statement.php?id=113
@@ -28,7 +28,7 @@ public class Semaforos {
     }
 
     private String[] leer(String input) throws IOException {
-        input = Utils.BR.readLine();
+        input = U.BR.readLine();
         return input.split(" ");
     }
 
@@ -50,7 +50,7 @@ public class Semaforos {
 
         while (!fin(inputs)) {
             try {
-                Utils.d("Introduce 2 números(El número de semáforos y la velocidad máxima):");
+                U.d("Introduce 2 números(El número de semáforos y la velocidad máxima):");
                 inputs = leer(input);
                 if (fin(inputs)) {
                     break;
@@ -62,7 +62,7 @@ public class Semaforos {
                 //Creamos una nueva calle
                 calle = new Calle(numSemaforos, velMax);
 
-                Utils.d("Introduce 3 números(dist,tiem_cerr,tiem_abie), por cada semáforo:");
+                U.d("Introduce 3 números(dist,tiem_cerr,tiem_abie), por cada semáforo:");
                 // Obtenemos los datos de los semáforos, 3 por semáforo
                 inputs = leer(input);
                 //Montamos la calle con los parámetros introducidos por consola
@@ -70,23 +70,23 @@ public class Semaforos {
                 //Añadimos la nueva calle a nuestras calles
                 calles.add(calle);
 
-                Utils.d(calle);
+                U.d(calle);
 
             } catch (IOException ex) {
-                Utils.de("IOException: " + ex);
+                U.de("IOException: " + ex);
             } catch (NumberFormatException ex) {
-                Utils.de("NumberFormatException: " + ex);
+                U.de("NumberFormatException: " + ex);
             } catch (ArrayIndexOutOfBoundsException ex) {
-                Utils.de("ArrayIndexOutOfBoundsException: " + ex);
+                U.de("ArrayIndexOutOfBoundsException: " + ex);
             } catch (Exception ex) {
-                Utils.de("Exception: " + ex);
+                U.de("Exception: " + ex);
             }
         }
 
-        Utils.d("Programa finalizado... obteniendo resultados por calle...");
+        U.d("Programa finalizado... obteniendo resultados por calle...");
         //Obtenemos los resultados y los pintamos
         printResultados();
-        Utils.d("END");
+        U.d("END");
     }
 
     /**
@@ -97,7 +97,7 @@ public class Semaforos {
             try {
                 System.out.println(calle.getTiempoTarda());
             } catch (ArithmeticException ex) {
-                Utils.de("ArithmeticException: " + ex);
+                U.de("ArithmeticException: " + ex);
             }
         }
     }
