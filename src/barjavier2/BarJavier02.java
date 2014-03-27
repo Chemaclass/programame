@@ -3,7 +3,7 @@ package barjavier2;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import utilidades.Utils;
+import utils.U;
 
 /**
  *
@@ -40,7 +40,7 @@ public class BarJavier02 {
             try {
                 log("Introduce el codigo y los benefícios:");
                 //Leemos la linea
-                input = Utils.BR.readLine();
+                input = U.BR.readLine();
                 //obtenemos las entradas
                 String[] inputs = input.split(" ");
 
